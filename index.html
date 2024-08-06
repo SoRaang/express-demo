@@ -39,13 +39,15 @@
                     .then(response => {
                         if (response.ok) {
                             return response.json();
+
+                            console.log(response);
                         } else {
-                            throw new Error(response.statusText);
+                            throw Error(response.statusText);
                         }
                     })
                     .then(users => {
                         if (Array.isArray(users)) {
-                            users.data.forEach(user => {
+                            users.forEach(user => {
                                 const itemEl = document.createElement('li');
 
                                 itemEl.innerHTML = `

@@ -7,7 +7,7 @@ const users = [
     { name: 'Kim', email: 'dsc0320@hotmail.com' },
     { name: 'Hong', email: 'hong@naver.com' },
     { name: 'Choi', email: 'choig@gmail.com' }
-]
+];
 
 app.listen(port, () => {
     console.log(`* 서버 실행 중 (http://localhost:${ port })`);
@@ -22,5 +22,5 @@ app.get('/greet', (req, res) => {
 });
 
 app.get('/users', (req, res) => {
-
+    res.json(users);
 });
