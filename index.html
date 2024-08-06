@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <h1 id="labelGreet">안녕!</h1>
+        <button type="button" id="btnRequest">요청</button>
+
+        <h4>유저 목록</h4>
+        <ul id="userList"></ul>
+
+        <script>
+            // 서버에 요청하기
+
+            const greetLabel = document.getElementById('labelGreet');
+            const btnRequest = document.getElementById('btnRequest');
+
+            btnRequest.addEventListener('click', () => sayHello());
+
+            function sayHello() {
+                fetch('http://localhost:3000/greet')
+                    .then(response => response.json())
+                    .then(json => greetLabel.textContent = json.message)
+                    .catch(e => console.error(e));
+            }
+
+            // 서버에 요청하기 (배열)
+
+            const userList = document.getElementById('userList');
+            const URL = 'http://localhost:3000/users';
+
+            document.addEventListener('DOMContentLoaded', () => {
+                fetch(URL)
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error(response.statusText);
+                        }
+                    })
+                    .then(users => {
+                        if (Array.isArray(users)) {
+                            users.data.forEach(user => {
+                                const itemEl = document.createElement('li');
+
+                                itemEl.innerHTML = `
+                                    <h5>이름: ${ user.name }</h5>
+                                    <p>e-mail: ${ user.email }</p>
+                                `;
+
+                                userList.appendChild(itemEl);
+                            });
+                        } else {
+                            throw new Error('데이터가 없습니다.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    })
+            });
+        </script>
+    </body>
+</html>
