@@ -9,12 +9,16 @@ const users = [
     { name: 'Choi', email: 'choig@gmail.com' }
 ];
 
+app.use(express.static(__dirname + '/public'));
+
+/** 기본 설정 */
+
 app.listen(port, () => {
     console.log(`* 서버 실행 중 (http://localhost:${ port })`);
 });
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname + '/index.html'));
+    res.sendFile(path.join(__dirname + 'public', 'index.html'));
 });
 
 app.get('/greet', (req, res) => {
